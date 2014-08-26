@@ -3,16 +3,16 @@ var fs = require("fs");
 var factor = require('factor-bundle');
 
 var bundle = browserify({
-  files: ["a.js"]
+  entries: [__dirname + "/a.js", __dirname + "/b.js"],
+  fullPaths: true
 });
 
-bundle.require("./b.js", {expose: "b"});
-bundle.require("./c.js", {expose: "c"});
+bundle.require(__dirname + "/c.js", {expose: "c"});
 
 bundle.plugin(factor, {
-  e: ["a.js"],
-  o: ["a.build.js"]
+  o: [__dirname + "/out.a.js", __dirname + "/out.b.js"],
+  e: [__dirname + "/a.js", __dirname + "/b.js"]
 });
 
 var stream = bundle.bundle();
-stream.pipe(fs.createWriteStream("bundle.js"));
+stream.pipe(fs.createWriteStream("out.common.js"));
