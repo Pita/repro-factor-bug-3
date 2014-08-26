@@ -3,15 +3,14 @@ var fs = require("fs");
 var factor = require('factor-bundle');
 
 var bundle = browserify({
-  entries: [__dirname + "/a.js", __dirname + "/b.js"],
-  fullPaths: true
+  entries: ["./a.js", "./b.js"]
 });
 
 bundle.require(__dirname + "/c.js", {expose: "c"});
 
 bundle.plugin(factor, {
-  o: [__dirname + "/out.a.js", __dirname + "/out.b.js"],
-  e: [__dirname + "/a.js", __dirname + "/b.js"]
+  o: ["./out.a.js", "./out.b.js"],
+  e: ["./a.js", "./b.js"]
 });
 
 var stream = bundle.bundle();
